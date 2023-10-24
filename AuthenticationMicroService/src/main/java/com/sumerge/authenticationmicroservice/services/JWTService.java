@@ -23,7 +23,6 @@ public class JWTService {
 
 
     public String extractEmail(String token){
-
         return extractClaim(token , Claims::getSubject);
     }
 
@@ -42,7 +41,7 @@ public class JWTService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 2 * 60 * 60 * 1000))
                 .signWith(getSignInKey() , SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -74,9 +73,3 @@ public class JWTService {
         //hmacKeyFor is the algorithm we will use
     }
 }
-
-// Notes:-
-// Jwt token consists of three parts
-// Header , Payload , Signature
-//399E8C31FAD77EEA6A332D19CC684
-// Payload contains the Claims (Data) in this case it will be the user data in addition to some extra data

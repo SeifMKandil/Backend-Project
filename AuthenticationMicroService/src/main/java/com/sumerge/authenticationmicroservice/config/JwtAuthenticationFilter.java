@@ -1,5 +1,7 @@
 package com.sumerge.authenticationmicroservice.config;
 
+import com.sumerge.authenticationmicroservice.auth.RecaptchaResponse;
+import com.sumerge.authenticationmicroservice.auth.RegisterRequest;
 import com.sumerge.authenticationmicroservice.services.JWTService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -14,6 +16,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -38,6 +43,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String jwtToken;
         final String userEmail;
+
+
 
         //The header must start with Bearer then the JwtToken
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -64,6 +71,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             }
         }
+
+
         filterChain.doFilter(request, response);
     }
+
+
 }

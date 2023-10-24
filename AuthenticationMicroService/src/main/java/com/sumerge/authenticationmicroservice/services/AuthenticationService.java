@@ -2,16 +2,22 @@ package com.sumerge.authenticationmicroservice.services;
 
 import com.sumerge.authenticationmicroservice.auth.AuthenticationRequest;
 import com.sumerge.authenticationmicroservice.auth.AuthenticationResponse;
+import com.sumerge.authenticationmicroservice.auth.RecaptchaResponse;
 import com.sumerge.authenticationmicroservice.auth.RegisterRequest;
 import com.sumerge.authenticationmicroservice.models.Role;
 import com.sumerge.authenticationmicroservice.models.UserModel;
 import com.sumerge.authenticationmicroservice.models.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
@@ -50,4 +56,6 @@ private final AuthenticationManager authenticationManager;
                 .token(jwtToken)
                 .build();
     }
+
+
 }
