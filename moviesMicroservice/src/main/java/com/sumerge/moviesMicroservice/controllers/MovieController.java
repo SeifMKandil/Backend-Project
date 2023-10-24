@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("movie")
+@CrossOrigin(origins = "http://localhost:4200")
 public class MovieController {
     @Autowired
     MovieRepo repo;
@@ -29,14 +30,13 @@ public class MovieController {
     private MovieService movieService;
 
     @PostMapping("/addMovie")
-    public void addPerson(@RequestBody Movie movie , HttpServletRequest request) {
-            String token=movieService.getToken(request);
-            if (service.validateToken(token)){
-                repo.save(movie);
-            }else {
-                throw new TokenValidationException("Unexpected Error occurred");
-            }
-
+    public void addMovies(@RequestBody List<Movie> movies, HttpServletRequest request) {
+        String token = movieService.getToken(request);
+        if (service.validateToken(token)) {
+            repo.saveAll(movies);
+        } else {
+            throw new TokenValidationException("Unexpected Error occurred");
+        }
     }
 
     @GetMapping("/{pageNumber}")
